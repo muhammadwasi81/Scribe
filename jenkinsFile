@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    stages {
+    //     stage("Code") {
+    //         steps {
+    //             git url: "https://github.com/qtechdevexperts/scribbleapistag.git", branch: "main"
+    //         }
+    //     }
+
+        stage('Install and Restart Services') {
+            parallel {
+                stage('authService') {
+                    steps {
+                        dir('/var/lib/jenkins/workspace/scribbleapistag/authService/') {
+                            sh 'npm install'
+                            sh 'pm2 restart 0'
+                        }
+                    }
+                }
+                stage('socialMediaService') {
+                    steps {
+                        dir('/var/lib/jenkins/workspace/scribbleapistag/socialMediaService/') {
+                            sh 'npm install'
+                            sh 'pm2 restart 1'
+                        }
+                    }
+                }
+                stage('adminService') {
+                    steps {
+                        dir('/var/lib/jenkins/workspace/scribbleapistag/adminService/') {
+                            sh 'npm install'
+                            sh 'pm2 restart 2'
+                        }
+                    }
+                }
+                stage('temporaryChat') {
+                    steps {
+                        dir('/var/lib/jenkins/workspace/scribbleapistag/temporaryChat/') {
+                            sh 'npm install'
+                            sh 'pm2 restart 3'
+                        }
+                    }
+                }
+                stage('mediaUpload') {
+                    steps {
+                        dir('/var/lib/jenkins/workspace/scribbleapistag/mediaUpload/') {
+                            sh 'npm install'
+                            sh 'pm2 restart 4'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

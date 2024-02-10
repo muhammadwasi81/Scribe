@@ -1,0 +1,30 @@
+{
+    "root": true,
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "env": {
+        "node": true,
+        "es6": true,
+        "jest": true
+    },
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "res|next" // This is for ignoring express.js middleware -- See https://github.com/expressjs/generator/issues/78
+            }
+        ],
+        "@typescript-eslint/no-var-requires": 1
+    },
+    "ignorePatterns": ["node_modules/", "dist/"]
+
+}
